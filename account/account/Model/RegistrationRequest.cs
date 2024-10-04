@@ -1,4 +1,4 @@
-﻿namespace Account.Model;
+﻿namespace DemoAPIProject.Model;
 
 /// <summary>
 /// Represents the data required for user registration.

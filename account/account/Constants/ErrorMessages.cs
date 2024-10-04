@@ -1,4 +1,6 @@
-﻿namespace Account.Constants
+﻿using Amazon.Runtime.Internal;
+
+namespace DemoAPIProject.Constants
 {
     /// <summary>
     /// Contains constant string values for error and status messages used in the application.
@@ -39,6 +41,8 @@
         /// Message indicating that a user has been successfully registered.
         /// </summary>
         public const string RegisteredSuccessfully = "User Registered Successfully";
+
+        public const string InvalidRegistrationRequest = "Invalid registration request.";
 
     }
 }

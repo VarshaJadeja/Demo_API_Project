@@ -1,4 +1,4 @@
-﻿namespace Account.Configuration
+﻿namespace DemoAPIProject.Configuration
 {
     using MongoDB.Driver;
 

@@ -1,9 +1,12 @@
-using Account.Configuration;
-using Account.Repositories;
-using Account.Services;
+using DemoAPIProject.ChatHub;
+using DemoAPIProject.Configuration;
+using DemoAPIProject.Repositories;
+using DemoAPIProject.Services;
+
 using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
+
 var connectionString = builder.Configuration.GetSection("Database")
     .Get<DbSetting>()?.ConnectionString;
 
@@ -25,10 +28,13 @@ builder.Services.AddScoped(sp =>
 });
 
 builder.Services.AddControllers();
+builder.Services.AddSignalR(options =>
+{
+    options.EnableDetailedErrors = true;
+});
 builder.Services.AddScoped<MongoDbContext>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<UserService>();
-builder.Services.AddGrpc();
+builder.Services.AddScoped<IRepository, Repository>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -43,27 +49,24 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddGrpcClient<AuthService.Greeter.GreeterClient>(options =>
+{
+    options.Address = new Uri("https://localhost:7208"); // Set the address of gRPC server
+});
 var app = builder.Build();
 
-app.UseCors();
-app.UseRouting();
-
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
-app.UseGrpcWeb(new GrpcWebOptions { DefaultEnabled = true });
-
-app.UseAuthorization();
-
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapGrpcService<UserService>();
-});
+app.UseCors();
+app.UseRouting()
+    .UseHttpsRedirection()
+    .UseAuthorization()
+    .UseEndpoints(endpoints =>
+    {
+        endpoints.MapHub<ChatHub>("/chatHub");
+    });
 app.MapControllers();
-
 app.Run();

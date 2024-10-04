@@ -1,6 +1,6 @@
-﻿namespace Account.Entity;
-using MongoDB.Bson.Serialization.Attributes;
+﻿namespace DemoAPIProject.Entity;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 /// <summary>
 /// Represents a user entity in the MongoDB database.

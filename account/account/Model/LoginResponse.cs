@@ -1,5 +1,6 @@
-﻿namespace Account.Model;
-using Account.Entity;
+﻿namespace DemoAPIProject.Model;
+
+using DemoAPIProject.Entity;
 
 /// <summary>
 /// Represents the response returned upon a successful user login.

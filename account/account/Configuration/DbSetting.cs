@@ -1,4 +1,4 @@
-﻿namespace Account.Configuration
+﻿namespace DemoAPIProject.Configuration
 {
     /// <summary>
     /// Represents the settings required for connecting to the MongoDB database.
